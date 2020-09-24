@@ -1,0 +1,115 @@
+<!doctype html>
+
+<title>CodeMirror: Lazy Mode Loading Demo</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="doc/docs.css">
+<link rel="stylesheet" href="lib/codemirror.css">
+<script src="lib/codemirror.js"></script>
+<script src="addon/mode/loadmode.js"></script>
+<script src="mode/meta.js"></script>
+<script src="mode/clike/clike.js"></script>
+
+<!--暗黑主题需要-->
+<link rel="stylesheet" href="theme/darcula.css">
+
+<!--搜索需要-->
+<script src="addon/search/searchcursor.js"></script>
+<script src="addon/search/search.js"></script>
+<script src="addon/scroll/annotatescrollbar.js"></script>
+<script src="addon/search/matchesonscrollbar.js"></script>
+<script src="addon/search/jump-to-line.js"></script>
+<link rel="stylesheet" href="addon/search/matchesonscrollbar.css">
+
+<!--美化搜索的框-->
+<script src="addon/dialog/dialog.js"></script>
+<link rel="stylesheet" href="addon/dialog/dialog.css">
+
+
+<!--自动补全-->
+<script src="addon/hint/show-hint.js"></script>
+<script src="addon/hint/javascript-hint.js"></script>
+<link rel="stylesheet" href="addon/hint/show-hint.css">
+
+<!--折叠-->
+<script src="addon/fold/foldcode.js"></script>
+<script src="addon/fold/foldgutter.js"></script>
+<script src="addon/fold/brace-fold.js"></script>
+<script src="addon/fold/comment-fold.js"></script>
+<link rel="stylesheet" href="addon/fold/foldgutter.css">
+
+<!--括号匹配-->
+<script type="text/javascript" src="addon/edit/closebrackets.js"></script>
+<script type="text/javascript" src="addon/edit/closetag.js"></script>
+<script type="text/javascript" src="addon/edit/continuelist.js"></script>
+<script type="text/javascript" src="addon/edit/matchbrackets.js"></script>
+<script type="text/javascript" src="addon/edit/matchtags.js"></script>
+<script type="text/javascript" src="addon/edit/trailingspace.js"></script>
+
+<!--全屏-->
+<script type="text/javascript" src="addon/display/fullscreen.js"></script>
+<link rel="stylesheet" href="addon/display/fullscreen.css">
+
+
+<!--<article>-->
+<textarea id="code" name="code">
+import com.demo.util.MyType;
+import com.demo.util.MyInterface;
+
+/**
+ * @ClassName Class
+ * @Description TODO
+ * @Author colin_xun@163.com
+ * @Date 2020/9/24 17:30
+ **/
+public enum Enum {
+  VAL1, VAL2, VAL3
+}
+
+public class Class<T, V> implements MyInterface {
+  public static final MyType<T, V> member;
+
+  private class InnerClass {
+    public int zero() {
+      return 0;
+    }
+  }
+
+  @Override
+  public MyType method() {
+    return member;
+  }
+
+  public void method2(MyType<T, V> value) {
+    method();
+    value.method3();
+    member = value;
+  }
+}
+</textarea>
+<!--</article>-->
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      mode: "text/x-java",
+      theme: "darcula",
+      indentUnit: 4, // 缩进单位为4
+      fullScreen:true, // 全屏
+      matchBrackets: true, //括号匹配
+      autoCloseBrackets: true,
+      lineWrapping: true, //代码折叠
+      foldGutter: true,
+      gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+      extraKeys:{
+        "F11": function(cm) {
+          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+        },
+        "Esc": function(cm) {
+          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+        },
+        "Alt-F": "findPersistent",
+        "Tab": "autocomplete"
+      }
+    });
+    // editor.setSize('auto','300px');
+</script>
